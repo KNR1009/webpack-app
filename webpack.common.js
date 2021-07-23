@@ -2,6 +2,8 @@
 const path = require("path");
 // output.path に指定したディレクトリ内のファイルを削除するプラグイン
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// バンドルを読み込んだ HTML を出力するプラグイン
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   // エントリーポイント
@@ -16,10 +18,11 @@ module.exports = {
   // プラグインの設定
   plugins: [
     // output.path に指定したディレクトリ（今回は public）内のファイルを削除してからビルドが実行される
-    new CleanWebpackPlugin({
-      // このサンプルの場合、webpack から出力していない index.html が削除されてしまうのを防ぎたいため、
-      // HTML は削除しない。すべてのファイルを削除して良いいのであれば、この設定は不要。
-      cleanOnceBeforeBuildPatterns: ["**/*", "!**.html"],
+    new CleanWebpackPlugin(),
+    // バンドルを読み込んだ HTML を出力する
+    new HtmlWebpackPlugin({
+      // テンプレート
+      template: "./src/html/index.html",
     }),
   ],
 };
